@@ -9,6 +9,9 @@
         <button @click="manageUsers">Manage Users</button>
         <button @click="viewReports">View Reports</button>
       </div>
+      <div class="buttonContainer">
+        <button @click="logout"> Logout </button>
+      </div>
     </div>
   </template>
   
@@ -22,6 +25,24 @@
     console.log('Viewing reports...');
     // Another admin-specific action
   }
+
+  import { useRouter } from "vue-router";
+  import { supabase } from "../clients/supabase"
+
+  const router = useRouter();
+
+  async function logout() {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      console.log(error);
+    }
+    else {
+      console.log("Sign out success")
+          router.push("/")
+    }
+  }
+
   </script>
   
   <style scoped>
